@@ -2,7 +2,7 @@ package org.stephen;
 
 import java.awt.EventQueue;
 
-import org.stephen.net.TextServer;
+import org.stephen.net.ObjectServer;
 import org.stephen.swing.ControlPanel;
 
 /**
@@ -12,6 +12,8 @@ import org.stephen.swing.ControlPanel;
  */
 public class Main {
 
+	public static ControlPanel cp = new ControlPanel();
+	
 	/**
 	 * Launches the application.
 	 * @param args The arguments, if any.
@@ -21,14 +23,13 @@ public class Main {
 
 			@Override
 			public void run() {
-				ControlPanel cp = new ControlPanel();
 				cp.setVisible(true);
 			}
 			
 		});
 		
 		try {
-			new TextServer().start();
+			new ObjectServer().start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
