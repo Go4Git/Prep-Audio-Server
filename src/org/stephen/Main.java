@@ -1,7 +1,6 @@
 package org.stephen;
 
-import org.stephen.net.Network;
-import org.stephen.swing.ControlPanel;
+import org.stephen.net.OpusServer;
 
 /**
  * The main class of the audio server. This class starts the server
@@ -9,14 +8,12 @@ import org.stephen.swing.ControlPanel;
  * @author Stephen Andrews
  */
 public class Main {
-
-	public static ControlPanel cp = new ControlPanel();
 	
 	/**
-	 * Starts the {@link Network}.
+	 * Starts the {@link OpusServer}.
 	 * @param args The arguments, if any.
 	 */
 	public static void main(String[] args) {
-		Network.getInstance().bind();
+		OpusServer.getInstance().bind();
 	}
 }

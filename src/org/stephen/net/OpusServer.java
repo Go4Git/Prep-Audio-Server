@@ -14,17 +14,17 @@ import java.util.logging.Logger;
  * creates a server to handle all incoming client connections.
  * @author Stephen Andrews
  */
-public class Network {
+public class OpusServer {
 
 	/**
 	 * The {@link Logger} instance.
 	 */
-	private static Logger logger = Logger.getLogger(Network.class.getName());
+	private static Logger logger = Logger.getLogger(OpusServer.class.getName());
 	
 	/**
-	 * The {@link Network} instance.
+	 * The {@link OpusServer} instance.
 	 */
-	public static Network instance;
+	public static OpusServer instance;
 	
 	/**
 	 * The {@link ServerBootstrap} instance.
@@ -39,18 +39,18 @@ public class Network {
 	private final int QUEUE_SIZE = 100;
 	
 	/**
-	 * The port to bind the {@link Network} to.
+	 * The port to bind the {@link OpusServer} to.
 	 */
 	private final int PORT = 1337;
 	
 	/**
-	 * Gets the {@link Network} instance.
-	 * @return The {@link Network} instance.
+	 * Gets the {@link OpusServer} instance.
+	 * @return The {@link OpusServer} instance.
 	 */
-	public static Network getInstance() {
+	public static OpusServer getInstance() {
 		if (instance == null) {
 			try {
-				instance = new Network();
+				instance = new OpusServer();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -60,7 +60,7 @@ public class Network {
 	}
 	
 	/**
-	 * Binds the {@link NetworkPipeline} to allow incoming connections.
+	 * Binds the {@link DefaultChannelInitializer} to allow incoming connections.
 	 */
 	public void bind() {
 		logger.info("Attempting to open the network on port: " + PORT + "...");
@@ -79,7 +79,7 @@ public class Network {
 		bootstrap.channel(NioServerSocketChannel.class);
 		bootstrap.option(ChannelOption.SO_BACKLOG, QUEUE_SIZE);
 		bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
-		bootstrap.childHandler(new NetworkPipeline());
+		bootstrap.childHandler(new DefaultChannelInitializer());
 		try {
 			bootstrap.localAddress(PORT).bind().sync();
 		} catch (InterruptedException ex) {
