@@ -1,6 +1,7 @@
 package org.stephen;
 
 import org.stephen.net.OpusServer;
+import org.stephen.swing.ControlPanel;
 
 /**
  * The main class of the audio server. This class starts the server
@@ -15,5 +16,6 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		OpusServer.getInstance().bind();
+		ControlPanel.getInstance().setVisible(true);
 	}
 }

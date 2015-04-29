@@ -26,9 +26,9 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		pipeline = ch.pipeline();
-		pipeline.addFirst("timeout", new ReadTimeoutHandler(TIMEOUT));
 		pipeline.addLast(new ChunkedWriteHandler());
 		pipeline.addLast("channel-handler", new OpusChannelHandler());
+		pipeline.addLast("timeout", new ReadTimeoutHandler(TIMEOUT));
 	}
 
 }
