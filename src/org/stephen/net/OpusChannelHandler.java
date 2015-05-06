@@ -3,9 +3,12 @@ package org.stephen.net;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.stream.ChunkedFile;
 
+import java.io.File;
 import java.util.logging.Logger;
 
+import org.stephen.audio.OpusFile;
 import org.stephen.swing.ControlPanel;
 
 /**
@@ -33,9 +36,8 @@ public class OpusChannelHandler extends ChannelInboundHandlerAdapter {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		logger.info("The channel " + ctx.channel().remoteAddress() + " is now active.");
 		ControlPanel.getInstance().getChannels().addElement("" + ctx.channel().remoteAddress());
-		//OpusFile f = new OpusFile(new File("./data/sample.opus"));
-		//ctx.writeAndFlush(0);
-		//ctx.writeAndFlush(new ChunkedFile(f.getRaf()));
+		OpusFile f = new OpusFile(new File("./data/sample.opus"));
+		ctx.writeAndFlush(new ChunkedFile(f.getRaf()));
 	}
 
 	@Override

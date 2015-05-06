@@ -4,6 +4,9 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
@@ -26,7 +29,9 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		pipeline = ch.pipeline();
-		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast("encoder", new ObjectEncoder());
+		pipeline.addLast("decoder", new ObjectDecoder(ClassResolvers.cacheDisabled(null)));
+		pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
 		pipeline.addLast("channel-handler", new OpusChannelHandler());
 		pipeline.addLast("timeout", new ReadTimeoutHandler(TIMEOUT));
 	}
